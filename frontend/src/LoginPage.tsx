@@ -99,7 +99,6 @@ const LoginPage = () => {
                   localStorage.setItem("token", res.token);
                 })
                 .catch(() => {
-                  console.log("in catch");
                   setErr(true);
                 });
             }}

@@ -11,7 +11,6 @@ const App = () => {
   useEffect(() => {
     const token: string = localStorage.getItem("token")!;
     setToken(token);
-    console.log(isAuthenticated);
   }, [token, isAuthenticated]);
   return (
     <BrowserRouter>
