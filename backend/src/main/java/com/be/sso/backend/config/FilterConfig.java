@@ -11,7 +11,6 @@ public class FilterConfig {
         FilterRegistrationBean filter= new FilterRegistrationBean();
         filter.setFilter(new JwtFilter());
         filter.addUrlPatterns("/users/*");
-        filter.addInitParameter("exclusions", "/users/save/*,/users/login/*");
         return filter;
     }
 }

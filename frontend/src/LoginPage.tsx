@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { getToken } from "./services";
 import { useNavigate } from "react-router-dom";
-import { isExpired } from "react-jwt";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const StyledWrapper = styled(Paper)(`
@@ -40,21 +39,11 @@ interface LoginDetails {
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
   const [loginDetails, setLoginDetails] = useState<LoginDetails>({
     username: "",
     password: "",
   });
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const isMyTokenExpired = isExpired(token!);
-    if (!isMyTokenExpired) navigate("/dashboard");
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) navigate("/dashboard");
-  }, [isAuthenticated, navigate]);
 
   const [err, setErr] = useState<boolean>(false);
 
@@ -95,8 +84,8 @@ const LoginPage = () => {
                 password: loginDetails.password,
               })
                 .then((res) => {
-                  navigate("/dashboard");
                   localStorage.setItem("token", res.token);
+                  navigate("/dashboard");
                 })
                 .catch(() => {
                   setErr(true);

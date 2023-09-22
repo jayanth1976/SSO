@@ -1,30 +1,12 @@
-import React, { useEffect, useState } from "react";
 import LoginPage from "./LoginPage";
 import Dashboard from "./Dashboard";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
-import { isExpired } from "react-jwt";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const App = () => {
-  const { isAuthenticated } = useAuth0();
-  const [token, setToken] = useState<string>("");
-  useEffect(() => {
-    const token: string = localStorage.getItem("token")!;
-    setToken(token);
-  }, [token, isAuthenticated]);
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/dashboard"
-          element={
-            isAuthenticated || !isExpired(token) ? (
-              <Dashboard />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
